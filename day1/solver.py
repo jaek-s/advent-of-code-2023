@@ -3,17 +3,18 @@ import re
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# ---------------------------------------------------------------------------- #
-#                                 first puzzle                                 #
-# ---------------------------------------------------------------------------- #
-
-regex_get_first_digit = re.compile("^.*?(\\d)")
-
 
 def get_input_lines():
     with open(current_dir + "/input.txt") as file:
         for line in file.readlines():
             yield line.strip()
+
+
+# ---------------------------------------------------------------------------- #
+#                                 first puzzle                                 #
+# ---------------------------------------------------------------------------- #
+
+regex_get_first_digit = re.compile("^.*?(\\d)")
 
 
 def get_calibration_value(line: str) -> int:
