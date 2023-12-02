@@ -1,13 +1,6 @@
-import os
 import re
 
-current_dir = os.path.dirname(os.path.abspath(__file__))
-
-
-def get_input_lines():
-    with open(current_dir + "/input.txt") as file:
-        for line in file.readlines():
-            yield line.strip()
+from helpers import get_input_lines
 
 
 # ---------------------------------------------------------------------------- #
@@ -30,7 +23,7 @@ def get_calibration_value(line: str) -> int:
 def solve_first_puzzle():
     sum = 0
 
-    for line in get_input_lines():
+    for line in get_input_lines("01"):
         sum += get_calibration_value(line)
 
     return sum
@@ -85,7 +78,7 @@ def get_real_calibration_value(line: str) -> int:
 def solve_second_puzzle():
     sum = 0
 
-    for line in get_input_lines():
+    for line in get_input_lines("01"):
         sum += get_real_calibration_value(line)
 
     return sum
