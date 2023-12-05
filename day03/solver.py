@@ -24,6 +24,7 @@ def get_input_lines_with_next_and_prev():
 
 match_symbols = re.compile(r"[^\d\.]")  # match anything other than a digit or a period
 
+
 def solve_first_puzzle():
     sum = 0
 
@@ -105,7 +106,6 @@ def get_gear_ratio_sum_for_line(current_line: str, prev_line: str, next_line: st
         part_nums += get_parts_above_or_below(prev_line, match_start)
         part_nums += get_parts_above_or_below(next_line, match_start)
 
-
         # two number matches need to be found or else continue
         if len(part_nums) != 2:
             continue
@@ -116,7 +116,7 @@ def get_gear_ratio_sum_for_line(current_line: str, prev_line: str, next_line: st
 
 
 def get_parts_above_or_below(line: str, gear_position: int) -> list[str]:
-    part_numbers_string = line[gear_position: gear_position + 1]
+    part_numbers_string = line[gear_position : gear_position + 1]
 
     left_half = line[:gear_position]
     left_match = match_part_number_at_end.search(left_half)
@@ -124,7 +124,7 @@ def get_parts_above_or_below(line: str, gear_position: int) -> list[str]:
     if left_match:
         part_numbers_string = f"{left_match[0]}{part_numbers_string}"
 
-    right_half = line[gear_position + 1:]
+    right_half = line[gear_position + 1 :]
     right_match = match_part_number_at_start.search(right_half)
 
     if right_match:
