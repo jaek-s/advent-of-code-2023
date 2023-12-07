@@ -1,6 +1,7 @@
 from functools import cache
 from helpers import get_input_lines
 
+
 @cache
 def get_games_from_input() -> dict[int, list[dict[str, int]]]:
     parsed_games = {}
