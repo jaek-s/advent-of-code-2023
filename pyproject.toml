@@ -1,0 +1,18 @@
+[project]
+name = ""
+version = ""
+description = ""
+authors = [
+    {name = "Jake Salgado", email = "5466068+jaek-s@users.noreply.github.com"},
+]
+dependencies = [
+    "typer[all]>=0.9.0",
+]
+requires-python = ">=3.12"
+readme = "README.md"
+license = {text = "MIT"}
+
+[tool.pdm.dev-dependencies]
+dev = [
+    "black>=23.11.0",
+]

@@ -1,6 +1,7 @@
+from functools import cache
 from helpers import get_input_lines
 
-
+@cache
 def get_games_from_input() -> dict[int, list[dict[str, int]]]:
     parsed_games = {}
     for line in get_input_lines("02"):
@@ -46,7 +47,8 @@ def game_is_possible(game: list[dict[str, int]]):
     return True
 
 
-def solve_first_puzzle(games: dict[int, list[dict[str, int]]]):
+def solve_first_puzzle():
+    games = get_games_from_input()
     sum = 0
     for game_id, game in games.items():
         if not game_is_possible(game):
@@ -78,7 +80,8 @@ def get_power_of_min_set_of_cubes(game):
     return red * green * blue
 
 
-def solve_second_puzzle(games: dict[int, list[dict[str, int]]]):
+def solve_second_puzzle():
+    games = get_games_from_input()
     sum = 0
 
     for game in games.values():
@@ -88,6 +91,5 @@ def solve_second_puzzle(games: dict[int, list[dict[str, int]]]):
 
 
 if __name__ == "__main__":
-    games = get_games_from_input()
-    print(f"first puzzle solution: {solve_first_puzzle(games)}")
-    print(f"second puzzle solution: {solve_second_puzzle(games)}")
+    print(f"first puzzle solution: {solve_first_puzzle()}")
+    print(f"second puzzle solution: {solve_second_puzzle()}")
