@@ -47,11 +47,11 @@ NUMBER_STRINGS = {
 }
 
 regex_match_first_digit_or_digit_string = re.compile(
-    f"^.*?(\\d|{" | ".join(NUMBER_STRINGS.keys())})"
+    f"^.*?(\\d|{"|".join(NUMBER_STRINGS.keys())})"
 )
 
 regex_match_last_digit_or_digit_string = re.compile(
-    f".*(\\d|{" | ".join(NUMBER_STRINGS.keys())}).*?$"
+    f".*(\\d|{"|".join(NUMBER_STRINGS.keys())}).*?$"
 )
 
 
@@ -77,7 +77,6 @@ def get_real_calibration_value(line: str) -> int:
 
 def solve_second_puzzle():
     sum = 0
-
     for line in get_input_lines("01"):
         sum += get_real_calibration_value(line)
 
