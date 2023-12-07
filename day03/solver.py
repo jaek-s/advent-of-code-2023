@@ -25,7 +25,7 @@ def get_input_lines_with_next_and_prev():
 match_symbols = re.compile(r"[^\d\.]")  # match anything other than a digit or a period
 
 
-def solve_first_puzzle():
+def puzzle1():
     sum = 0
 
     for current_line, prev_line, next_line in get_input_lines_with_next_and_prev():
@@ -75,7 +75,7 @@ match_part_number_at_start = re.compile(r"^\d+")
 match_non_digits = re.compile(r"[^\d]")
 
 
-def solve_second_puzzle():
+def puzzle2():
     sum = 0
 
     for current_line, prev_line, next_line in get_input_lines_with_next_and_prev():
@@ -134,5 +134,5 @@ def get_parts_above_or_below(line: str, gear_position: int) -> list[str]:
 
 
 if __name__ == "__main__":
-    print(f"first puzzle solution: {solve_first_puzzle()}")
-    print(f"second puzzle solution: {solve_second_puzzle()}")
+    print(f"first puzzle solution: {puzzle1()}")
+    print(f"second puzzle solution: {puzzle2()}")

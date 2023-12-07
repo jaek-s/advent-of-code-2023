@@ -42,7 +42,7 @@ def parse_number_str(number_str: str) -> list[int]:
 # ---------------------------------------------------------------------------- #
 
 
-def solve_first_puzzle():
+def puzzle1():
     sum = 0
 
     for line in get_input_lines("04"):
@@ -67,7 +67,7 @@ def get_card_value(card: str) -> int:
 # ---------------------------------------------------------------------------- #
 
 
-def solve_second_puzzle():
+def puzzle2():
     cards = build_card_list()
     return calculate_winnings(cards, 0, len(cards))
 
@@ -96,5 +96,5 @@ def calculate_winnings(cards: list[ParsedCard], start: int, end: int):
 
 
 if __name__ == "__main__":
-    print(f"first puzzle solution: {solve_first_puzzle()}")
-    print(f"second puzzle solution: {solve_second_puzzle()}")
+    print(f"first puzzle solution: {puzzle1()}")
+    print(f"second puzzle solution: {puzzle2()}")

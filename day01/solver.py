@@ -20,7 +20,7 @@ def get_calibration_value(line: str) -> int:
     return int(f"{first_digit_match.group(1)}{last_digit_match.group(1)}")
 
 
-def solve_first_puzzle():
+def puzzle1():
     sum = 0
 
     for line in get_input_lines("01"):
@@ -75,7 +75,7 @@ def get_real_calibration_value(line: str) -> int:
     return int(f"{first_digit}{second_digit}")
 
 
-def solve_second_puzzle():
+def puzzle2():
     sum = 0
     for line in get_input_lines("01"):
         sum += get_real_calibration_value(line)
@@ -84,5 +84,5 @@ def solve_second_puzzle():
 
 
 if __name__ == "__main__":
-    print(f"first puzzle solution: {solve_first_puzzle()}")
-    print(f"second puzzle solution: {solve_second_puzzle()}")
+    print(f"first puzzle solution: {puzzle1()}")
+    print(f"second puzzle solution: {puzzle2()}")

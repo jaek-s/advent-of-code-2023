@@ -47,7 +47,7 @@ def game_is_possible(game: list[dict[str, int]]):
     return True
 
 
-def solve_first_puzzle():
+def puzzle1():
     games = get_games_from_input()
     sum = 0
     for game_id, game in games.items():
@@ -80,7 +80,7 @@ def get_power_of_min_set_of_cubes(game):
     return red * green * blue
 
 
-def solve_second_puzzle():
+def puzzle2():
     games = get_games_from_input()
     sum = 0
 
@@ -91,5 +91,5 @@ def solve_second_puzzle():
 
 
 if __name__ == "__main__":
-    print(f"first puzzle solution: {solve_first_puzzle()}")
-    print(f"second puzzle solution: {solve_second_puzzle()}")
+    print(f"first puzzle solution: {puzzle1()}")
+    print(f"second puzzle solution: {puzzle2()}")
