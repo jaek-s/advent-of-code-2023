@@ -1,5 +1,7 @@
 from pprint import pprint
 
+from rich import print
+
 from helpers import open_input
 
 # ---------------------------------------------------------------------------- #
@@ -39,20 +41,22 @@ def puzzle2():
 
         categories.reverse()
 
-        starting_range = list(filter(lambda map: map[0] == 0, categories[0][1])).pop()
-        pprint(
-            find_destination_range_fit(
-                [starting_range[0], starting_range[2]], categories[0]
-            )
-        )
+        # starting_range = list(filter(lambda map: map[0] == 0, categories[0][1])).pop()
 
-        range_in_process = [starting_range[0], starting_range[2]]
+        # range_in_process = [starting_range[0], starting_range[2]]
+        range_in_process = [
+            0,
+            55,
+        ]  # for the sample input, instead of having code that works for both inputs
         for category in categories:
             range_in_process = find_destination_range_fit(range_in_process, category)
-            pprint(range_in_process)
+            print(f"{category[0]}: {range_in_process}")
 
         # This still needs to be run through `get_seed_location()`
-        return get_lowest_available_seed_number_in_range(range_in_process, seeds)
+        return get_seed_location(
+            get_lowest_available_seed_number_in_range(range_in_process, seeds),
+            [category[1] for category in categories],
+        )
 
 
 def find_destination_range_fit(
@@ -75,13 +79,14 @@ def find_destination_range_fit(
 
     # This should actually output the desired map_dest_start
     # with a range that doesn't clip into existing ranges
-    # raise Exception(f"Could not find destination range fit in {category[0]}. range {desired_range}")
 
     # This probably shouldn't work, but let's see what happens
     return desired_range
 
 
-def get_lowest_available_seed_number_in_range(desired_range, seeds):
+def get_lowest_available_seed_number_in_range(
+    desired_range: list[int], seeds: list[int]
+):
     desired_range_start, desired_range_len = desired_range
     desired_range_end = desired_range_start + desired_range_len
 
@@ -97,6 +102,8 @@ def get_lowest_available_seed_number_in_range(desired_range, seeds):
             return desired_range_start
 
         return seed_range_start
+
+    raise Exception("couldn't find an appropriate seed number")
 
 
 # ---------------------------------------------------------------------------- #
