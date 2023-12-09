@@ -11,13 +11,13 @@ from helpers import open_input
 
 def puzzle1():
     with open_input("05") as file:
-        almanac_categories = file.read().split("\n\n")
+        seeds, *almanac_categories = file.read().split("\n\n")
+
+        seeds = list(map(int, seeds.split(":").pop().split()))
 
         categories = [
-            parse_almanac_category(category)[1] for category in almanac_categories
+            parse_almanac_category(category) for category in almanac_categories
         ]
-
-        seeds = categories.pop(0)[0]
 
         locations = [get_seed_location(seed, categories) for seed in seeds]
 
@@ -29,81 +29,55 @@ def puzzle1():
 # ---------------------------------------------------------------------------- #
 
 
+# I could not for the life of me figure this one out.
+# Credit goes to this youtube video: https://www.youtube.com/watch?v=NmxHw_bHhGM
 def puzzle2():
     with open_input("05") as file:
-        almanac_categories = file.read().split("\n\n")
+        raw_seeds, *almanac_categories = file.read().split("\n\n")
+        raw_seeds = list(map(int, raw_seeds.split(":")[1].split()))
+
+        seeds = []
+
+        for i in range(0, len(raw_seeds), 2):
+            seeds.append((raw_seeds[i], raw_seeds[i] + raw_seeds[i + 1]))
 
         categories = [
             parse_almanac_category(category) for category in almanac_categories
         ]
 
-        seeds = categories.pop(0)[1].pop()
-
-        categories.reverse()
-
-        # starting_range = list(filter(lambda map: map[0] == 0, categories[0][1])).pop()
-
-        # range_in_process = [starting_range[0], starting_range[2]]
-        range_in_process = [
-            0,
-            55,
-        ]  # for the sample input, instead of having code that works for both inputs
         for category in categories:
-            range_in_process = find_destination_range_fit(range_in_process, category)
-            print(f"{category[0]}: {range_in_process}")
+            new_seeds = []
 
-        # This still needs to be run through `get_seed_location()`
-        return get_seed_location(
-            get_lowest_available_seed_number_in_range(range_in_process, seeds),
-            [category[1] for category in categories],
-        )
+            while len(seeds) > 0:
+                seeds_start, seeds_end = seeds.pop()
 
+                for map_dest_start, map_input_start, map_len in category:
+                    overlap_start = max(seeds_start, map_input_start)
+                    overlap_end = min(seeds_end, map_input_start + map_len)
 
-def find_destination_range_fit(
-    desired_range: list[int], category: tuple[str, list[list[int]]]
-):
-    desired_range_start, desired_range_length = desired_range
+                    if overlap_start >= overlap_end:
+                        continue
 
-    for map in category[1]:
-        map_dest_start, map_input_start, map_length = map
+                    # I don't totally understand why we need to add map_input_start + map_dest_start
+                    new_seeds.append(
+                        (
+                            overlap_start - map_input_start + map_dest_start,
+                            overlap_end - map_input_start + map_dest_start,
+                        )
+                    )
 
-        if not desired_range_start in range(
-            map_dest_start, map_dest_start + map_length
-        ):
-            continue
+                    if overlap_start > seeds_start:
+                        seeds.append((seeds_start, overlap_start))
 
-        return [
-            desired_range_start + map_input_start - map_dest_start,
-            desired_range_length if desired_range_length <= map_length else map_length,
-        ]
+                    if seeds_end > overlap_end:
+                        seeds.append((overlap_end, seeds_end))
 
-    # This should actually output the desired map_dest_start
-    # with a range that doesn't clip into existing ranges
+                    break
+                else:
+                    new_seeds.append((seeds_start, seeds_end))
+            seeds = new_seeds
 
-    # This probably shouldn't work, but let's see what happens
-    return desired_range
-
-
-def get_lowest_available_seed_number_in_range(
-    desired_range: list[int], seeds: list[int]
-):
-    desired_range_start, desired_range_len = desired_range
-    desired_range_end = desired_range_start + desired_range_len
-
-    for seed_range_start, seed_range_len in list(zip(seeds[::2], seeds[1::2])):
-        seed_range_end = seed_range_start + seed_range_len
-        if desired_range_start > seed_range_end:
-            continue
-
-        if desired_range_end < seed_range_start:
-            continue
-
-        if desired_range_start in range(seed_range_start, seed_range_end):
-            return desired_range_start
-
-        return seed_range_start
-
-    raise Exception("couldn't find an appropriate seed number")
+        return min(seeds)[0]
 
 
 # ---------------------------------------------------------------------------- #
@@ -112,14 +86,7 @@ def get_lowest_available_seed_number_in_range(
 
 
 def parse_almanac_category(category: str):
-    category_name, category_content = category.split(":")
-    return (
-        category_name.strip(),
-        [
-            [int(map_part) for map_part in map.split()]
-            for map in category_content.strip().split("\n")
-        ],
-    )
+    return [list(map(int, cat_map.split())) for cat_map in category.splitlines()[1:]]
 
 
 def get_seed_location(seed, categories: list[list[list[int]]]) -> int:
