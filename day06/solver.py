@@ -1,35 +1,28 @@
 from functools import reduce
 
-from rich import print
-
-from helpers import open_input
-
-
-def puzzle1():
+def puzzle1(input: str):
     error_margins = []
-    with open_input("06") as file:
-        times, distances = file.read().splitlines()
+    times, distances = input.splitlines()
 
-        races = zip(
-            list(map(int, times.split()[1:])), list(map(int, distances.split()[1:]))
-        )
+    races = zip(
+        list(map(int, times.split()[1:])), list(map(int, distances.split()[1:]))
+    )
 
-        for race in races:
-            min_hold, max_hold = find_min_and_max_hold_times(race)
-            error_margins.append(max_hold - min_hold + 1)
+    for race in races:
+        min_hold, max_hold = find_min_and_max_hold_times(race)
+        error_margins.append(max_hold - min_hold + 1)
 
     return reduce(lambda x, y: x * y, error_margins)
 
 
-def puzzle2():
-    with open_input("06") as file:
-        time, distance = file.read().splitlines()
-        time = int(time.split(":")[1:].pop().replace(" ", ""))
-        distance = int(distance.split(":")[1:].pop().replace(" ", ""))
+def puzzle2(input: str):
+    time, distance = input.splitlines()
+    time = int(time.split(":")[1:].pop().replace(" ", ""))
+    distance = int(distance.split(":")[1:].pop().replace(" ", ""))
 
-        min_hold, max_hold = find_min_and_max_hold_times((time, distance))
+    min_hold, max_hold = find_min_and_max_hold_times((time, distance))
 
-        return max_hold - min_hold + 1
+    return max_hold - min_hold + 1
 
 
 def find_min_and_max_hold_times(race: tuple[int, int]) -> tuple[int, int]:

@@ -1,8 +1,5 @@
 import re
 
-from helpers import get_input_lines
-
-
 # ---------------------------------------------------------------------------- #
 #                                 first puzzle                                 #
 # ---------------------------------------------------------------------------- #
@@ -20,10 +17,10 @@ def get_calibration_value(line: str) -> int:
     return int(f"{first_digit_match.group(1)}{last_digit_match.group(1)}")
 
 
-def puzzle1():
+def puzzle1(input: str):
     sum = 0
 
-    for line in get_input_lines("01"):
+    for line in input.splitlines():
         sum += get_calibration_value(line)
 
     return sum
@@ -75,14 +72,9 @@ def get_real_calibration_value(line: str) -> int:
     return int(f"{first_digit}{second_digit}")
 
 
-def puzzle2():
+def puzzle2(input: str):
     sum = 0
-    for line in get_input_lines("01"):
+    for line in input.splitlines():
         sum += get_real_calibration_value(line)
 
     return sum
-
-
-if __name__ == "__main__":
-    print(f"first puzzle solution: {puzzle1()}")
-    print(f"second puzzle solution: {puzzle2()}")

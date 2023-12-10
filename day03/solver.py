@@ -1,20 +1,17 @@
 import re
 
-from helpers import open_input
-
 match_digits = re.compile(r"\d+")  # match any amount of digits
 
 
-def get_input_lines_with_next_and_prev():
-    with open_input("03") as file:
-        lines = file.read().strip().split("\n")
+def get_input_lines_with_next_and_prev(input: str):
+    lines = input.strip().split("\n")
 
-        for index in range(0, len(lines)):
-            current_line = lines[index]
-            prev_line = lines[index - 1] if index > 0 else ""
-            next_line = lines[index + 1] if index < len(lines) - 1 else ""
+    for index in range(0, len(lines)):
+        current_line = lines[index]
+        prev_line = lines[index - 1] if index > 0 else ""
+        next_line = lines[index + 1] if index < len(lines) - 1 else ""
 
-            yield current_line, prev_line, next_line
+        yield current_line, prev_line, next_line
 
 
 # ---------------------------------------------------------------------------- #
@@ -25,10 +22,10 @@ def get_input_lines_with_next_and_prev():
 match_symbols = re.compile(r"[^\d\.]")  # match anything other than a digit or a period
 
 
-def puzzle1():
+def puzzle1(input: str):
     sum = 0
 
-    for current_line, prev_line, next_line in get_input_lines_with_next_and_prev():
+    for current_line, prev_line, next_line in get_input_lines_with_next_and_prev(input):
         sum += get_part_num_sum_for_line(current_line, prev_line, next_line)
 
     return sum
@@ -75,10 +72,10 @@ match_part_number_at_start = re.compile(r"^\d+")
 match_non_digits = re.compile(r"[^\d]")
 
 
-def puzzle2():
+def puzzle2(input: str):
     sum = 0
 
-    for current_line, prev_line, next_line in get_input_lines_with_next_and_prev():
+    for current_line, prev_line, next_line in get_input_lines_with_next_and_prev(input):
         sum += get_gear_ratio_sum_for_line(current_line, prev_line, next_line)
 
     return sum
@@ -131,8 +128,3 @@ def get_parts_above_or_below(line: str, gear_position: int) -> list[str]:
         part_numbers_string = f"{part_numbers_string}{right_match[0]}"
 
     return [part for part in match_non_digits.split(part_numbers_string) if part]
-
-
-if __name__ == "__main__":
-    print(f"first puzzle solution: {puzzle1()}")
-    print(f"second puzzle solution: {puzzle2()}")

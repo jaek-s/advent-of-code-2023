@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from functools import cached_property
 
-from helpers import get_input_lines
-
 
 @dataclass
 class ParsedCard:
@@ -42,10 +40,10 @@ def parse_number_str(number_str: str) -> list[int]:
 # ---------------------------------------------------------------------------- #
 
 
-def puzzle1():
+def puzzle1(input: str):
     sum = 0
 
-    for line in get_input_lines("04"):
+    for line in input.splitlines():
         sum += get_card_value(line)
 
     return sum
@@ -67,15 +65,15 @@ def get_card_value(card: str) -> int:
 # ---------------------------------------------------------------------------- #
 
 
-def puzzle2():
-    cards = build_card_list()
+def puzzle2(input: str):
+    cards = build_card_list(input)
     return calculate_winnings(cards, 0, len(cards))
 
 
-def build_card_list():
+def build_card_list(input: str):
     card_list = []
 
-    for line in get_input_lines("04"):
+    for line in input.splitlines():
         card_list.append(ParsedCard.parse(line))
 
     return card_list
@@ -93,8 +91,3 @@ def calculate_winnings(cards: list[ParsedCard], start: int, end: int):
         sum += calculate_winnings(cards, card.index, card.index + match_count)
 
     return sum
-
-
-if __name__ == "__main__":
-    print(f"first puzzle solution: {puzzle1()}")
-    print(f"second puzzle solution: {puzzle2()}")

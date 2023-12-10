@@ -1,11 +1,10 @@
 from functools import cache
-from helpers import get_input_lines
 
 
 @cache
-def get_games_from_input() -> dict[int, list[dict[str, int]]]:
+def get_games_from_input(input: str) -> dict[int, list[dict[str, int]]]:
     parsed_games = {}
-    for line in get_input_lines("02"):
+    for line in input.splitlines():
         game_id, game = line.split(": ")
 
         game_id = int(game_id.replace("Game ", ""))
@@ -48,8 +47,8 @@ def game_is_possible(game: list[dict[str, int]]):
     return True
 
 
-def puzzle1():
-    games = get_games_from_input()
+def puzzle1(input: str):
+    games = get_games_from_input(input)
     sum = 0
     for game_id, game in games.items():
         if not game_is_possible(game):
@@ -81,16 +80,11 @@ def get_power_of_min_set_of_cubes(game):
     return red * green * blue
 
 
-def puzzle2():
-    games = get_games_from_input()
+def puzzle2(input: str):
+    games = get_games_from_input(input)
     sum = 0
 
     for game in games.values():
         sum += get_power_of_min_set_of_cubes(game)
 
     return sum
-
-
-if __name__ == "__main__":
-    print(f"first puzzle solution: {puzzle1()}")
-    print(f"second puzzle solution: {puzzle2()}")
