@@ -1,5 +1,6 @@
 from functools import reduce
 
+
 def puzzle1(input: str):
     error_margins = []
     times, distances = input.splitlines()

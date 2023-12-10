@@ -8,13 +8,12 @@ def puzzle1(input: str):
 
     seeds = list(map(int, seeds.split(":").pop().split()))
 
-    categories = [
-        parse_almanac_category(category) for category in almanac_categories
-    ]
+    categories = [parse_almanac_category(category) for category in almanac_categories]
 
     locations = [get_seed_location(seed, categories) for seed in seeds]
 
     return min(locations)
+
 
 def get_seed_location(seed, categories: list[list[list[int]]]) -> int:
     input_val = int(seed)
@@ -56,9 +55,7 @@ def puzzle2(input: str):
     for i in range(0, len(raw_seeds), 2):
         seeds.append((raw_seeds[i], raw_seeds[i] + raw_seeds[i + 1]))
 
-    categories = [
-        parse_almanac_category(category) for category in almanac_categories
-    ]
+    categories = [parse_almanac_category(category) for category in almanac_categories]
 
     for category in categories:
         new_seeds = []

@@ -16,6 +16,7 @@ def puzzle1(input: str):
 
     return answer
 
+
 def puzzle2(input: str):
     rounds = []
     for hand_and_bid in input.splitlines():
@@ -28,6 +29,7 @@ def puzzle2(input: str):
 
     return answer
 
+
 ALPHA_CARD_VALUE = dict(
     T=10,
     J=11,
@@ -35,6 +37,7 @@ ALPHA_CARD_VALUE = dict(
     K=13,
     A=14,
 )
+
 
 @dataclass
 class Round:
@@ -52,7 +55,6 @@ class Round:
     @property
     def hand_value(self):
         counts = list(reversed(sorted(self.card_counts.values())))
-
 
         # 5 of a kind, highest of 7 possible hands
         if counts[0] == 5:
@@ -96,6 +98,7 @@ class Round:
     def __lt__(self, other):
         return self.sort_key < other.sort_key
 
+
 class Part2Round(Round):
     @property
     def hand_value(self):
@@ -105,10 +108,8 @@ class Part2Round(Round):
         card_counts = copy(self.card_counts)
         card_counts["J"] = 0
 
-
         counts = list(reversed(sorted(card_counts.values())))
         counts[0] += joker_count
-
 
         # 5 of a kind, highest of 7 possible hands
         if counts[0] == 5:
