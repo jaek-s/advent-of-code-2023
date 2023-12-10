@@ -4,19 +4,27 @@ from rich import print
 def puzzle1(input: str):
     return sum(
         [
-            find_next_sequence_value(list(map(int, line.split())))
+            find_next_and_prev_sequence_value(list(map(int, line.split())))[1]
             for line in input.splitlines()
         ]
     )
 
 
-def find_next_sequence_value(sequence: list[int]):
+def puzzle2(input: str):
+    return sum(
+        [
+            find_next_and_prev_sequence_value(list(map(int, line.split())))[0]
+            for line in input.splitlines()
+        ]
+    )
+
+
+def find_next_and_prev_sequence_value(sequence: list[int]):
     next_val = 0
+    prev_val = 0
     difference_lists = list(reversed(build_sequence_difference_list(sequence)))
 
-    for i in range(0, len(difference_lists)):
-        current_list = difference_lists[i]
-
+    for i, current_list in enumerate(difference_lists):
         try:
             next_list = difference_lists[i + 1]
         except IndexError:
@@ -24,8 +32,10 @@ def find_next_sequence_value(sequence: list[int]):
 
         next_val = current_list[-1] + next_list[-1]
         next_list.append(next_val)
+        prev_val = next_list[0] - current_list[0]
+        next_list.insert(0, prev_val)
 
-    return next_val
+    return prev_val, next_val
 
 
 def build_sequence_difference_list(sequence: list[int]) -> list[list[int]]:
