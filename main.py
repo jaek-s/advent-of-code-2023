@@ -34,7 +34,7 @@ def main(
 
     if not hasattr(solvers, "puzzle1") and not hasattr(solvers, "puzzle2"):
         print(
-            f"Please add a [blue]`puzzle1`[/blue] and/or [blue]`puzzle2`[/blue] function to [blue`]./day{formatted_day}/solvers.py`[/blue]"
+            f"Please add a [blue]`puzzle1`[/blue] and/or [blue]`puzzle2`[/blue] function to [blue]`./day{formatted_day}/solvers.py`[/blue]"
         )
         return
 
