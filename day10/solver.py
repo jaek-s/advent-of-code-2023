@@ -29,7 +29,8 @@ def puzzle2(input: str):
     loop_area = calc_area(loop_coords)
 
     # Use Pick's theorem to calculate the number of interior sections
-    return int(loop_area + 1 - (len(loop_coords)/2))
+    return int(loop_area + 1 - (len(loop_coords) / 2))
+
 
 def calc_area(loop_coords: list[Point]):
     """
@@ -43,10 +44,10 @@ def calc_area(loop_coords: list[Point]):
         except IndexError:
             next_coords = loop_coords[0]
 
-
         area_doubled += (coord.x * next_coords.y) - (coord.y * next_coords.x)
 
-    return area_doubled/2
+    return area_doubled / 2
+
 
 def find_the_loop(input: str, print_loop: bool = False):
     pipe_map, starting_coord = parse_input(input)
@@ -82,7 +83,7 @@ def find_the_loop(input: str, print_loop: bool = False):
     loop_coords.append(right_ptr)
 
     if print_loop:
-        output = [""]*len(pipe_map)
+        output = [""] * len(pipe_map)
         for x, col in enumerate(pipe_map):
             for y, cell in enumerate(col):
                 this_cell = Point(x, y)
