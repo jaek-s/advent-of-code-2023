@@ -1,3 +1,6 @@
+from functools import lru_cache
+
+
 def puzzle1(input: str):
     sum = 0
 
@@ -9,6 +12,19 @@ def puzzle1(input: str):
     return sum
 
 
+def puzzle2(input: str):
+    sum = 0
+
+    for line in input.splitlines():
+        springs, notes = line.split()
+        springs = "?".join([springs] * 5)
+        notes = tuple(map(int, ",".join([notes] * 5).split(",")))
+        sum += count(springs, notes)
+
+    return sum
+
+
+@lru_cache
 def count(springs: str, notes: tuple):
     """
     This solution was borrowed from here: https://github.com/hyper-neutrino/advent-of-code/blob/main/2023/day12p1.py
